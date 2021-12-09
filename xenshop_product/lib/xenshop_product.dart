@@ -16,5 +16,3 @@ export 'presentation/pages/base_products_page.dart';
 export 'presentation/widgets/add_to_cart_widget.dart';
 export 'presentation/widgets/filter_product_widget.dart';
 export 'presentation/widgets/product_widget.dart';
-
-export 'util/currency_util.dart';
