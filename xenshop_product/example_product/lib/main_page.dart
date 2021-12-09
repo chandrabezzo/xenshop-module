@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xenshop_product/presentation/pages/products_page.dart';
+import 'package:xenshop_product/xenshop_product.dart';
 
 class MainPage extends StatelessWidget {
   static const routeName = '/main';
@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
               title: const Text('Product Page'),
               subtitle:
                   const Text('The page contains list of available products'),
-              onTap: () => Get.toNamed(ProductsPage.routeName),
+              onTap: () => Get.toNamed(BaseProductPage.routeName),
             )
           ],
         ),

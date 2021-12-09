@@ -11,9 +11,9 @@ import '../widgets/add_to_cart_widget.dart';
 import '../widgets/filter_product_widget.dart';
 import '../widgets/product_widget.dart';
 
-class ProductsPage extends GetView<ProductController> {
+class BaseProductPage extends GetView<ProductController> {
   static const routeName = '/products';
-  const ProductsPage({Key? key}) : super(key: key);
+  const BaseProductPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
