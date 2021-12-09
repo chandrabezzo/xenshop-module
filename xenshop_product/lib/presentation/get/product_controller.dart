@@ -11,10 +11,12 @@ class ProductController extends GetxController {
   final _products = Rx<List<Product>>([]);
   final _isLoadingRetrieveProducts = false.obs;
   final _isHideFilter = false.obs;
+  final _quantityProduct = 1.obs;
 
   List<Product> get products => _products.value;
   bool get isLoadingRetrieveProducts => _isLoadingRetrieveProducts.value;
   bool get isHideFilter => _isHideFilter.value;
+  int get quantityProduct => _quantityProduct.value;
 
   @override
   void onInit() {
@@ -58,6 +60,23 @@ class ProductController extends GetxController {
       ),
     );
     _isLoadingRetrieveProducts.value = false;
+  }
+
+  void setInitialQuantityProduct() => _quantityProduct.value = 1;
+
+  void increaseQuantityProduct() {
+    final currentQuantity = _quantityProduct.value;
+    _quantityProduct.value = currentQuantity + 1;
+  }
+
+  void decreaseQuantityProduct() {
+    final currentQuantity = _quantityProduct.value;
+    _quantityProduct.value = currentQuantity - 1;
+  }
+
+  void addToCart(Product product) {
+    final currentQuantity = _quantityProduct.value;
+    debugPrint('$currentQuantity ${product.title} Added to cart');
   }
 
   @override
