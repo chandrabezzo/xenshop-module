@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xenshop_core/base/xenshop_text_style.dart';
 
 import '../../const/i18n/product_strings.dart';
 
@@ -30,7 +31,9 @@ class AddToCartWidget extends StatelessWidget {
                 icon: const Icon(Icons.remove),
               ),
               const SizedBox(width: 36),
-              Text(quantity.toString()),
+              Text(quantity.toString(), style: XenshopTextStyle
+                .headline5(context: context),
+              ),
               const SizedBox(width: 36),
               IconButton(
                 onPressed: onIncreaseQuantity,

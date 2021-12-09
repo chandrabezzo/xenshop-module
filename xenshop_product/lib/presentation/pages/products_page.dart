@@ -103,18 +103,23 @@ class ProductsPage extends GetView<ProductController> {
   void onAddCartPressed(BuildContext context, Product product) {
     controller.setInitialQuantityProduct();
     Get.bottomSheet(
-      Obx(() => AddToCartWidget(
-        onAddToCartPressed: () => onAddToCartPressed(context, product),
-        onDecreaseQuantity: () => onDecreaseQuantity(context),
-        onIncreaseQuantity: () => onIncreaseQuantity(context),
-        quantity: controller.quantityProduct,
-      ),),
+      Obx(
+        () => AddToCartWidget(
+          onAddToCartPressed: () => onAddToCartPressed(context, product),
+          onDecreaseQuantity: () => onDecreaseQuantity(context),
+          onIncreaseQuantity: () => onIncreaseQuantity(context),
+          quantity: controller.quantityProduct,
+        ),
+      ),
       backgroundColor: white,
     );
   }
 
-  void onAddToCartPressed(BuildContext context, Product product) =>
-      controller.addToCart(product);
+  void onAddToCartPressed(BuildContext context, Product product) {
+    final currentQuantity = controller.quantityProduct;
+    debugPrint('$currentQuantity ${product.title} Added to cart');
+    Get.back();
+  }
 
   void onIncreaseQuantity(BuildContext context) =>
       controller.increaseQuantityProduct();
@@ -123,7 +128,15 @@ class ProductsPage extends GetView<ProductController> {
       controller.decreaseQuantityProduct();
 
   void onFilterPressed(BuildContext context) => Get.bottomSheet(
-        const FilterProductWidget(),
+        FilterProductWidget(
+          onCategorySelected: (category) =>
+              onCategorySelected(context, category),
+        ),
         backgroundColor: white,
       );
+
+  void onCategorySelected(BuildContext context, String category) {
+    debugPrint('$category selected');
+    Get.back();
+  }
 }
