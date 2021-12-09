@@ -80,22 +80,42 @@ class BaseProductPage extends GetView<ProductController> {
       );
 
   Widget buildBodyProducts(BuildContext context, List<Product> products) =>
-      ListView.builder(
-        controller: controller.scrollProductsController,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return Padding(
-            padding: const EdgeInsets.only(
-              bottom: 16,
+      Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: controller.scrollProductsController,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 16,
+                  ),
+                  child: ProductWidget(
+                    product: product,
+                    onAddToCartPressed: (product) =>
+                        onAddCartPressed(context, product),
+                  ),
+                );
+              },
+              itemCount: products.length,
             ),
-            child: ProductWidget(
-              product: product,
-              onAddToCartPressed: (product) =>
-                  onAddCartPressed(context, product),
+          ),
+          Visibility(
+            visible: controller.isLoadMoreProducts,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Shimmer.fromColors(
+                child: ProductWidget.skeleton, 
+                baseColor: Colors.grey.shade300, 
+                highlightColor: Colors.grey.shade100,
+              ),
             ),
-          );
-        },
-        itemCount: products.length,
+            replacement: const SizedBox.shrink(),
+          )
+        ],
       );
 
   void onCartPressed(BuildContext context) => debugPrint('On Cart Pressed');

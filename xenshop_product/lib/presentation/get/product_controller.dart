@@ -3,20 +3,30 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/product.dart';
-import '../../domain/entities/rating.dart';
+import '../../domain/usecases/retrieve_products.dart';
 
 class ProductController extends GetxController {
+  final RetrieveProducts _retrieveProducts;
+
+  ProductController({
+    required RetrieveProducts retrieveProducts,
+  }) : _retrieveProducts = retrieveProducts;
+
   final scrollProductsController = ScrollController();
 
   final _products = Rx<List<Product>>([]);
   final _isLoadingRetrieveProducts = false.obs;
+  final _isLoadLoadMoreProducts = false.obs;
   final _isHideFilter = false.obs;
   final _quantityProduct = 1.obs;
+  final _limit = 10.obs;
 
   List<Product> get products => _products.value;
   bool get isLoadingRetrieveProducts => _isLoadingRetrieveProducts.value;
+  bool get isLoadMoreProducts => _isLoadLoadMoreProducts.value;
   bool get isHideFilter => _isHideFilter.value;
   int get quantityProduct => _quantityProduct.value;
+  int get limit => _limit.value;
 
   @override
   void onInit() {
@@ -26,7 +36,8 @@ class ProductController extends GetxController {
   }
 
   void refreshProduct() {
-    retrieveProducts(limit: 3);
+    _limit.value = 10;
+    retrieveProducts(limit: _limit.value);
   }
 
   void scrollListener() {
@@ -36,30 +47,53 @@ class ProductController extends GetxController {
     } else {
       _isHideFilter.value = false;
     }
+
+    if (scrollProductsController.position.pixels ==
+        scrollProductsController.position.maxScrollExtent) {
+      _isLoadLoadMoreProducts.value = true;
+
+      final increasedLimit = _limit.value + 10;
+      _limit.value = increasedLimit;
+
+      loadMoreProducts(
+        limit: _limit.value,
+      );
+    }
   }
 
   void retrieveProducts({
     int limit = 10,
   }) async {
     _isLoadingRetrieveProducts.value = true;
-    await Future.delayed(const Duration(seconds: 5));
-    _products.value = List.generate(
-      limit,
-      (index) => Product(
-        category: 'Category $index',
-        description: 'Desc $index',
-        id: index,
-        image:
-            'https://cdn.eraspace.com/pub/media/catalog/product/i/p/iphone_13_pro_max_graphite_1.jpg',
-        price: 13000000,
-        rating: Rating(
-          count: 100,
-          rate: 5,
-        ),
-        title: 'Iphone 13 Pro Max',
+    _retrieveProducts
+        .execute(
+      RetrieveProductsParams(
+        limit: limit,
       ),
-    );
-    _isLoadingRetrieveProducts.value = false;
+    )
+        .then((value) {
+      _products.value = value;
+      _isLoadingRetrieveProducts.value = false;
+    });
+  }
+
+  void loadMoreProducts({
+    int limit = 10,
+  }) async {
+    _isLoadLoadMoreProducts.value = true;
+    _retrieveProducts
+        .execute(
+      RetrieveProductsParams(
+        limit: limit,
+      ),
+    )
+        .then((value) {
+      final currentProducts = _products.value;
+      currentProducts.addAll(value);
+      _products.value = currentProducts;
+      _products.refresh();
+      _isLoadLoadMoreProducts.value = false;
+    });
   }
 
   void setInitialQuantityProduct() => _quantityProduct.value = 1;
