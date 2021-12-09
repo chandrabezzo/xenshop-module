@@ -74,11 +74,6 @@ class ProductController extends GetxController {
     _quantityProduct.value = currentQuantity - 1;
   }
 
-  void addToCart(Product product) {
-    final currentQuantity = _quantityProduct.value;
-    debugPrint('$currentQuantity ${product.title} Added to cart');
-  }
-
   @override
   void onClose() {
     scrollProductsController.removeListener(scrollListener);
