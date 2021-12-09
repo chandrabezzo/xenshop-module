@@ -2,9 +2,9 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:xenshop_core/base/colors.dart';
 import 'package:xenshop_core/base/xenshop_text_style.dart';
+import 'package:xenshop_core/xenshop_core.dart';
 
 import '../../domain/entities/product.dart';
-import '../../util/currency_util.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
