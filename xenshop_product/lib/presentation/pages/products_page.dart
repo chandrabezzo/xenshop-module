@@ -7,6 +7,7 @@ import 'package:xenshop_core/base/xenshop_text_style.dart';
 import '../../const/i18n/product_strings.dart';
 import '../../domain/entities/product.dart';
 import '../get/product_controller.dart';
+import '../widgets/add_to_cart_widget.dart';
 import '../widgets/filter_product_widget.dart';
 import '../widgets/product_widget.dart';
 
@@ -21,8 +22,8 @@ class ProductsPage extends GetView<ProductController> {
         body: buildBody(context),
         floatingActionButton: Obx(
           () => Visibility(
-            visible: controller.isLoadingRetrieveProducts ||
-              controller.isHideFilter,
+            visible:
+                controller.isLoadingRetrieveProducts || controller.isHideFilter,
             child: const SizedBox.shrink(),
             replacement: buildFloatingActionButton(context),
           ),
@@ -60,10 +61,7 @@ class ProductsPage extends GetView<ProductController> {
   Widget buildFloatingActionButton(BuildContext context) =>
       FloatingActionButton(
         backgroundColor: blue,
-        onPressed: () => Get.bottomSheet(
-          const FilterProductWidget(),
-          backgroundColor: white,
-        ),
+        onPressed: () => onFilterPressed(context),
         child: const Icon(Icons.filter_list),
       );
 
@@ -91,10 +89,10 @@ class ProductsPage extends GetView<ProductController> {
               bottom: 16,
             ),
             child: ProductWidget(
-                product: product,
-                onAddToCartPressed: (product) =>
-                  onAddToCartPressed(context, product),
-                ),
+              product: product,
+              onAddToCartPressed: (product) =>
+                  onAddCartPressed(context, product),
+            ),
           );
         },
         itemCount: products.length,
@@ -102,6 +100,30 @@ class ProductsPage extends GetView<ProductController> {
 
   void onCartPressed(BuildContext context) => debugPrint('On Cart Pressed');
 
+  void onAddCartPressed(BuildContext context, Product product) {
+    controller.setInitialQuantityProduct();
+    Get.bottomSheet(
+      Obx(() => AddToCartWidget(
+        onAddToCartPressed: () => onAddToCartPressed(context, product),
+        onDecreaseQuantity: () => onDecreaseQuantity(context),
+        onIncreaseQuantity: () => onIncreaseQuantity(context),
+        quantity: controller.quantityProduct,
+      ),),
+      backgroundColor: white,
+    );
+  }
+
   void onAddToCartPressed(BuildContext context, Product product) =>
-      debugPrint('${product.title} Added To Cart');
+      controller.addToCart(product);
+
+  void onIncreaseQuantity(BuildContext context) =>
+      controller.increaseQuantityProduct();
+
+  void onDecreaseQuantity(BuildContext context) =>
+      controller.decreaseQuantityProduct();
+
+  void onFilterPressed(BuildContext context) => Get.bottomSheet(
+        const FilterProductWidget(),
+        backgroundColor: white,
+      );
 }
