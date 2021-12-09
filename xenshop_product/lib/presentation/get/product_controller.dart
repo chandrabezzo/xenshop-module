@@ -71,12 +71,14 @@ class ProductController extends GetxController {
 
   void retrieveProducts({
     int limit = 10,
+    String? category,
   }) async {
     _isLoadingRetrieveProducts.value = true;
     _retrieveProducts
         .execute(
       RetrieveProductsParams(
         limit: limit,
+        category: category,
       ),
     )
         .then((value) {
@@ -87,12 +89,14 @@ class ProductController extends GetxController {
 
   void loadMoreProducts({
     int limit = 10,
+    String? category,
   }) async {
     _isLoadLoadMoreProducts.value = true;
     _retrieveProducts
         .execute(
       RetrieveProductsParams(
         limit: limit,
+        category: category,
       ),
     )
         .then((value) {
