@@ -24,13 +24,36 @@ class CartController extends GetxController {
       (index) => Cart(
         product: CartProduct(
           id: index,
-          image: 'https://cdn.eraspace.com/pub/media/catalog/product/i/p/iphone_13_pro_max_graphite_1.jpg',
-          price: 13000000,
-          title: 'iPhone 13 Pro Max'
-        ), 
-        quantity: index,
+          image:
+              'https://cdn.eraspace.com/pub/media/catalog/product/i/p/iphone_13_pro_max_graphite_1.jpg',
+          price: 13000,
+          title: 'iPhone 13 Pro Max',
+        ),
+        quantity: index + 1,
       ),
     );
     _isLoadingRetreiveCart.value = false;
+  }
+
+  void onDecreaseQuantity(int index) {
+    final cart = _carts.value[index];
+    int currentQuantity = cart.quantity;
+    final decreasedQuantity = currentQuantity - 1;
+    if(decreasedQuantity != 0) cart.quantity = decreasedQuantity;
+    _carts.refresh();
+  }
+
+  void onIncreaseQuantity(int index) {
+    final cart = _carts.value[index];
+    int currentQuantity = cart.quantity;
+    final increasedQuantity = currentQuantity + 1;
+    cart.quantity = increasedQuantity;
+    _carts.refresh();
+  }
+
+  void onRemoveFromCart(int index) {
+    final cart = _carts.value[index];
+    _carts.value.remove(cart);
+    _carts.refresh();
   }
 }

@@ -13,6 +13,7 @@ class BaseCartPage extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: white,
         appBar: buildAppBar(context),
         body: buildBody(context),
       );
@@ -35,8 +36,8 @@ class BaseCartPage extends GetView<CartController> {
       );
 
   Widget buildBodySkeleton(BuildContext context) => Center(
-    child: Text('Loading'),
-  );
+        child: Text('Loading'),
+      );
 
   Widget buildBodyCart(BuildContext context, List<Cart> carts) =>
       ListView.builder(
@@ -44,8 +45,65 @@ class BaseCartPage extends GetView<CartController> {
           final cart = carts[index];
           return CartWidget(
             cart: cart,
+            onDecreaseQuantity: () => onDecreaseQuantity(context, index),
+            onDeleteProductFromCart: () =>
+                onDeleteProductFromCart(context, index),
+            onIncreaseQuantity: () => onIncreaseQuantity(context, index),
           );
         },
-        itemCount: 5,
+        itemCount: carts.length,
       );
+
+  void onDecreaseQuantity(BuildContext context, int index) =>
+      controller.onDecreaseQuantity(index);
+
+  void onIncreaseQuantity(BuildContext context, int index) =>
+      controller.onIncreaseQuantity(index);
+
+  void onDeleteProductFromCart(BuildContext context, int index) {
+    Get.defaultDialog(
+      title: CartStrings.deleteFromCart.tr,
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(CartStrings.sureDeleteFromCart.tr,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      confirm: ElevatedButton(
+        onPressed: () {
+          controller.onRemoveFromCart(index);
+          Get.back();
+        },
+        child: Text(
+          CartStrings.ok.tr,
+          style: XenshopTextStyle.button(
+            context: context,
+            color: blue,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: white,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              color: blue,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+      cancel: ElevatedButton(
+        onPressed: () => Get.back(),
+        child: Text(CartStrings.cancel.tr),
+        style: ElevatedButton.styleFrom(
+          primary: blue,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              color: white,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+    );
+  }
 }

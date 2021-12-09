@@ -1,11 +1,11 @@
-import 'package:xenshop_cart/domain/entities/cart_product.dart';
+import 'cart_product.dart';
 
 class Cart {
   final CartProduct product;
-  final int quantity;
+  int quantity;
 
-  const Cart({
+  Cart({
     required this.product,
-    required this.quantity,
+    this.quantity = 0,
   });
 }
