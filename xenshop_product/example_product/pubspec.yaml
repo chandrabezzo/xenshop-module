@@ -37,6 +37,13 @@ dependencies:
   get: ^4.5.1
   xenshop_product:
     path: ../
+  dio: ^4.0.4
+  dio_logging_interceptor: ^1.0.1
+  xenshop_core:
+    git:
+      url: https://github.com/chandrabezzo/xenshop-module
+      ref: main
+      path: xenshop_core
 
 dev_dependencies:
   flutter_test:
