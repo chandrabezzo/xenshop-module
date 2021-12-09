@@ -495,7 +495,7 @@ packages:
     description:
       path: xenshop_core
       ref: main
-      resolved-ref: "8136b76bd7f1963c26ac965575097bb67880e6d5"
+      resolved-ref: "7bcc9ebd239902a0404cd54d1bfd6a613b955626"
       url: "https://github.com/chandrabezzo/xenshop-module"
     source: git
     version: "0.0.1"
