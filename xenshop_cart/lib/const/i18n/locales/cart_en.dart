@@ -7,4 +7,6 @@ Map<String, String> cartEn = {
   CartStrings.ok: 'Ok',
   CartStrings.sureDeleteFromCart: 
     'Are you sure want delete this product from cart?',
+  CartStrings.totalPrice: 'Total Price',
+  CartStrings.checkout: 'Checkout',
 };

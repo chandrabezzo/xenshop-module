@@ -21,7 +21,7 @@ class CartWidget extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(
       horizontal: 16,
-      vertical: 8
+      vertical: 8,
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -58,7 +58,7 @@ class CartWidget extends StatelessWidget {
                 style: XenshopTextStyle.headline6(
                   context: context,
                   color: blue,
-                )
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,4 +84,46 @@ class CartWidget extends StatelessWidget {
       ],
     ),
   );
+
+  static Widget get skeleton {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            color: black,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: black,
+                    width: double.infinity,
+                    height: 10,
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    width: double.infinity,
+                    height: 10,
+                    color: black,
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
