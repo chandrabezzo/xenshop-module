@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:xenshop_core/xenshop_core.dart';
 
 import '../../domain/entities/product.dart';
+import '../../domain/usecases/retrieve_categories.dart';
 import '../../domain/usecases/retrieve_products.dart';
 
 class ProductController extends GetxController {
+  final RetrieveCategories _retrieveCategories;
   final RetrieveProducts _retrieveProducts;
 
   ProductController({
+    required RetrieveCategories retrieveCategories,
     required RetrieveProducts retrieveProducts,
-  }) : _retrieveProducts = retrieveProducts;
+  })  : _retrieveCategories = retrieveCategories,
+        _retrieveProducts = retrieveProducts;
 
   final scrollProductsController = ScrollController();
 
   final _products = Rx<List<Product>>([]);
+  final _categories = Rx<List<String>>([]);
   final _isLoadingRetrieveProducts = false.obs;
   final _isLoadLoadMoreProducts = false.obs;
   final _isHideFilter = false.obs;
@@ -22,6 +28,7 @@ class ProductController extends GetxController {
   final _limit = 10.obs;
 
   List<Product> get products => _products.value;
+  List<String> get categories => _categories.value;
   bool get isLoadingRetrieveProducts => _isLoadingRetrieveProducts.value;
   bool get isLoadMoreProducts => _isLoadLoadMoreProducts.value;
   bool get isHideFilter => _isHideFilter.value;
@@ -32,6 +39,7 @@ class ProductController extends GetxController {
   void onInit() {
     super.onInit();
     retrieveProducts();
+    retrieveCategories();
     scrollProductsController.addListener(scrollListener);
   }
 
@@ -106,6 +114,12 @@ class ProductController extends GetxController {
   void decreaseQuantityProduct() {
     final currentQuantity = _quantityProduct.value;
     _quantityProduct.value = currentQuantity - 1;
+  }
+
+  void retrieveCategories() {
+    _retrieveCategories.execute(NoParams()).then(
+      (value) => _categories.value = value,
+    );
   }
 
   @override
