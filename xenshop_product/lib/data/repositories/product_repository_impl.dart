@@ -11,8 +11,14 @@ class ProductRepositoryImpl implements ProductRepository {
   }) : _dataSource = dataSource;
 
   @override
-  Future<List<Product>> products({int limit = 10}) async {
-    final models = await _dataSource.products(limit: limit);
+  Future<List<Product>> products({
+    int limit = 10,
+    String? category,
+  }) async {
+    final models = await _dataSource.products(
+      limit: limit,
+      category: category,
+    );
     return models
         .map(
           (product) => ProductMapper.toEntity(product),

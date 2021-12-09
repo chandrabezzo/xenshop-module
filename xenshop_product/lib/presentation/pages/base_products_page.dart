@@ -108,8 +108,8 @@ class BaseProductPage extends GetView<ProductController> {
                 horizontal: 16,
               ),
               child: Shimmer.fromColors(
-                child: ProductWidget.skeleton, 
-                baseColor: Colors.grey.shade300, 
+                child: ProductWidget.skeleton,
+                baseColor: Colors.grey.shade300,
                 highlightColor: Colors.grey.shade100,
               ),
             ),
@@ -148,16 +148,21 @@ class BaseProductPage extends GetView<ProductController> {
       controller.decreaseQuantityProduct();
 
   void onFilterPressed(BuildContext context) => Get.bottomSheet(
-        Obx(() => FilterProductWidget(
-          categories: controller.categories,
-          onCategorySelected: (category) =>
-              onCategorySelected(context, category),
-        ),),
+        Obx(
+          () => FilterProductWidget(
+            categories: controller.categories,
+            onCategorySelected: (category) =>
+                onCategorySelected(context, category),
+          ),
+        ),
         backgroundColor: white,
       );
 
   void onCategorySelected(BuildContext context, String category) {
-    debugPrint('$category selected');
+    controller.retrieveProducts(
+      category: category,
+      limit: controller.limit,
+    );
     Get.back();
   }
 }

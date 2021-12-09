@@ -14,13 +14,16 @@ class ProductDatasourceImpl implements ProductDatasource {
   @override
   Future<List<ProductModel>> products({
     int limit = 10,
+    String? category,
   }) async {
     final params = {
       'limit': limit,
     };
 
     final responseJson = await _client.get(
-      ProductEndpoint.products,
+      (category != null)
+        ? ProductEndpoint.productByCategory
+        : ProductEndpoint.products,
       queryParameters: params,
     );
 

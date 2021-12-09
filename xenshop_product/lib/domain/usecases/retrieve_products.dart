@@ -15,18 +15,21 @@ class RetrieveProducts extends UseCase<List<Product>, RetrieveProductsParams> {
 
   @override
   Future<List<Product>> build(RetrieveProductsParams params) async =>
-    await _repository.products(
-      limit: params.limit,
-    );
+      await _repository.products(
+        limit: params.limit,
+        category: params.category,
+      );
 
   @override
   ErrorHandler errorHandler() => _errorHandler;
 }
 
 class RetrieveProductsParams {
+  final String? category;
   final int limit;
 
   const RetrieveProductsParams({
+    this.category,
     required this.limit,
   });
 }
