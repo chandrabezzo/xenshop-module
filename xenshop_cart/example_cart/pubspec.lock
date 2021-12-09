@@ -394,6 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  shimmer:
+    dependency: transitive
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -495,7 +502,7 @@ packages:
     description:
       path: xenshop_core
       ref: main
-      resolved-ref: "7bcc9ebd239902a0404cd54d1bfd6a613b955626"
+      resolved-ref: b6bc355afa8cf01c27c785dbc55e9e16a6e5fb49
       url: "https://github.com/chandrabezzo/xenshop-module"
     source: git
     version: "0.0.1"
