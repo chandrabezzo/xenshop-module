@@ -1,0 +1,6 @@
+package co.xenshop.cart.example.cart
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
