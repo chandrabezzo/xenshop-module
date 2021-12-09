@@ -148,10 +148,11 @@ class BaseProductPage extends GetView<ProductController> {
       controller.decreaseQuantityProduct();
 
   void onFilterPressed(BuildContext context) => Get.bottomSheet(
-        FilterProductWidget(
+        Obx(() => FilterProductWidget(
+          categories: controller.categories,
           onCategorySelected: (category) =>
               onCategorySelected(context, category),
-        ),
+        ),),
         backgroundColor: white,
       );
 

@@ -29,7 +29,17 @@ class ProductDatasourceImpl implements ProductDatasource {
     for (Map<String, dynamic> json in data) {
       list.add(ProductModel.fromJson(json));
     }
-    
+
+    return list;
+  }
+
+  @override
+  Future<List<String>> get categories async {
+    final responseJson = await _client.get(ProductEndpoint.categories);
+    final list = <String>[];
+    for (String category in responseJson.data) {
+      list.add(category);
+    }
     return list;
   }
 }
