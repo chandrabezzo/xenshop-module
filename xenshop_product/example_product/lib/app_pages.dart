@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:xenshop_product/presentation/get/product_binding.dart';
-import 'package:xenshop_product/presentation/pages/products_page.dart';
+import 'package:xenshop_product/xenshop_product.dart';
 
 import 'main_page.dart';
 
@@ -12,8 +11,8 @@ final List<GetPage> pageRoutes = [
     page: () => const MainPage(),
   ),
   GetPage(
-    name: ProductsPage.routeName, 
-    page: () => const ProductsPage(),
+    name: BaseProductPage.routeName, 
+    page: () => const BaseProductPage(),
     binding: ProductBinding(),
   ),
 ];
