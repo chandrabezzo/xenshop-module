@@ -32,6 +32,7 @@ class CartWidget extends StatelessWidget {
           width: 100,
           height: 100,
         ),
+        const SizedBox(width: 8),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
