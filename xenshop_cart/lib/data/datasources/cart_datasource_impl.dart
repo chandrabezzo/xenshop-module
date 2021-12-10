@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
 
 import '../../xenshop_cart.dart';
 import '../models/cart_product_model.dart';
@@ -37,5 +38,14 @@ class CartDatasourceImpl implements CartDatasource {
       '${CartEndpoint.product}/$id',
     );
     return ProductModel.fromJson(responseJson.data);
+  }
+
+  @override
+  Future<bool> get deleteCart async {
+    const cartId = 3;
+    final responseJson = await _client.delete(
+      '${CartEndpoint.deleteCartProduct}/$cartId',
+    );
+    return (responseJson.statusCode == HttpStatus.ok);
   }
 }

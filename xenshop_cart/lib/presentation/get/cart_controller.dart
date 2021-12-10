@@ -2,14 +2,18 @@ import 'package:get/get.dart';
 import 'package:xenshop_core/xenshop_core.dart';
 
 import '../../domain/entities/cart.dart';
+import '../../domain/usecases/remove_cart.dart';
 import '../../domain/usecases/retrieve_carts.dart';
 
 class CartController extends GetxController {
   final RetrieveCarts _retrieveCarts;
+  final RemoveCart _removeCart;
 
   CartController({
     required RetrieveCarts retrieveCarts,
-  }) : _retrieveCarts = retrieveCarts;
+    required RemoveCart removeCart,
+  })  : _retrieveCarts = retrieveCarts,
+        _removeCart = removeCart;
 
   final _isLoadingRetreiveCart = false.obs;
   final _carts = Rx<List<Cart>>([]);
@@ -48,10 +52,13 @@ class CartController extends GetxController {
     _carts.refresh();
   }
 
-  void onRemoveFromCart(int index) {
+  void onRemoveFromCart(int index) async {
     final cart = _carts.value[index];
-    _carts.value.remove(cart);
-    _carts.refresh();
+    final removed = await _removeCart.execute(cart.product.id);
+    if(removed){
+      _carts.value.remove(cart);
+      _carts.refresh();
+    }
   }
 
   double get totalPrice {
