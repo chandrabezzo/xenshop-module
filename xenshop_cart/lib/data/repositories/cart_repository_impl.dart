@@ -25,4 +25,8 @@ class CartRepositoryImpl implements CartRepository {
 
     return list;
   }
+
+  @override
+  Future<bool> deleteCart(int id) async => 
+    await _dataSource.deleteCart;
 }
