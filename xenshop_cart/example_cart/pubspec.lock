@@ -155,6 +155,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.4"
+  dio_logging_interceptor:
+    dependency: "direct main"
+    description:
+      name: dio_logging_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   extended_image:
     dependency: transitive
     description:
@@ -323,7 +337,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   path_provider_android:
     dependency: transitive
     description:
@@ -498,11 +512,11 @@ packages:
     source: path
     version: "0.0.1"
   xenshop_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: xenshop_core
       ref: main
-      resolved-ref: b6bc355afa8cf01c27c785dbc55e9e16a6e5fb49
+      resolved-ref: aa72e7a3b5da8216ed4d38698325532dfc61f9ea
       url: "https://github.com/chandrabezzo/xenshop-module"
     source: git
     version: "0.0.1"
