@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xenshop_core/base/xenshop_text_style.dart';
+import 'package:xenshop_core/xenshop_core.dart';
 
 import '../../const/i18n/product_strings.dart';
 
 class AddToCartWidget extends StatelessWidget {
   const AddToCartWidget({
     Key? key,
+    this.isOnLoading = false,
     this.onAddToCartPressed,
     this.onDecreaseQuantity,
     this.onIncreaseQuantity,
     required this.quantity,
   }) : super(key: key);
 
+  final bool isOnLoading;
   final VoidCallback? onAddToCartPressed;
   final VoidCallback? onDecreaseQuantity;
   final VoidCallback? onIncreaseQuantity;
@@ -42,14 +45,22 @@ class AddToCartWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+          Visibility(
+            visible: isOnLoading,
+            child: const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(blue),
+              ),
             ),
-            child: ElevatedButton(
-              onPressed: onAddToCartPressed,
-              child: Text(ProductStrings.addToCart.tr),
+            replacement: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: ElevatedButton(
+                onPressed: onAddToCartPressed,
+                child: Text(ProductStrings.addToCart.tr),
+              ),
             ),
           ),
           const SizedBox(height: 16),

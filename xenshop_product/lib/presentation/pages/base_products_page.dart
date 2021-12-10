@@ -129,6 +129,7 @@ class BaseProductPage extends GetView<ProductController> {
           onDecreaseQuantity: () => onDecreaseQuantity(context),
           onIncreaseQuantity: () => onIncreaseQuantity(context),
           quantity: controller.quantityProduct,
+          isOnLoading: false,
         ),
       ),
       backgroundColor: white,
